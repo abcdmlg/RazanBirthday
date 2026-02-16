@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Proud-O-Log | Deep Space Archive</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5e208c",
+                        "primary-dim": "#3a1457",
+                        "primary-glow": "#9d54db",
+                        "deep-blue": "#0a0b1e",
+                        "background-dark": "#020206",
+                        "surface-dark": "#080812",
+                        "terminal-green": "#4ade80",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["Share Tech Mono", "monospace"],
+                    },
+                    backgroundImage: {
+                        'cyber-grid': "linear-gradient(rgba(94, 32, 140, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(94, 32, 140, 0.07) 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .cyber-grid-bg {
+                background-size: 40px 40px;
+                background-position: center top;
+            }
+            .glass-panel {
+                @apply bg-surface-dark/90 backdrop-blur-md border border-primary/40 shadow-[0_4px_20px_rgba(0,0,0,0.5)];
+            }
+            .timeline-line {
+                background: linear-gradient(180deg, transparent 0%, #5e208c 15%, #5e208c 85%, transparent 100%);
+                box-shadow: 0 0 5px rgba(94, 32, 140, 0.4);
+            }
+            .chrono-card {
+                @apply transition-all duration-300 hover:border-primary-glow/60 hover:bg-surface-dark relative overflow-hidden;
+            }
+            .text-glow {
+                text-shadow: 0 0 8px rgba(157, 84, 219, 0.4);
+            }
+            .scanline-overlay {
+                background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+                background-size: 100% 4px;
+                pointer-events: none;
+            }
+            .tech-border-corners {
+                position: relative;
+            }
+            .tech-border-corners::before,
+            .tech-border-corners::after {
+                content: '';
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                border: 1px solid #9d54db;
+                transition: all 0.3s ease;
+                z-index: 10;
+            }
+            .tech-border-corners::before {
+                top: -1px;
+                left: -1px;
+                border-right: none;
+                border-bottom: none;
+            }
+            .tech-border-corners::after {
+                bottom: -1px;
+                right: -1px;
+                border-left: none;
+                border-top: none;
+            }
+            .data-label {
+                @apply absolute text-[9px] font-mono text-primary-glow/50 uppercase tracking-[0.2em];
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-300 font-display min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white">
+<div class="fixed inset-0 bg-cyber-grid cyber-grid-bg opacity-30 pointer-events-none z-0"></div>
+<div class="fixed inset-0 bg-gradient-to-b from-deep-blue via-transparent to-background-dark pointer-events-none z-0"></div>
+<div class="fixed inset-0 scanline-overlay z-50 opacity-20 pointer-events-none"></div>
+<div class="relative z-10 container mx-auto px-6 py-12 max-w-6xl">
+<header class="mb-32 flex flex-col items-center text-center space-y-8 relative">
+<div class="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
+<div class="inline-flex items-center gap-4 px-6 py-1.5 border border-primary/50 bg-deep-blue/80 text-[10px] font-mono font-bold tracking-[0.3em] text-primary-glow uppercase">
+<span class="w-1.5 h-1.5 bg-primary-glow rounded-none animate-pulse"></span>
+                DEEP_SPACE_LOG // ARCHIVE_RAZAN_01
+            </div>
+<div class="space-y-4 relative">
+<h1 class="text-6xl md:text-9xl font-bold tracking-tighter uppercase leading-[0.85] select-none">
+<span class="text-slate-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">PROUD</span><span class="text-primary">-O-</span><span class="text-slate-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">LOG</span><br/>
+<span class="text-4xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-primary-glow via-indigo-300 to-primary-glow text-glow font-mono tracking-widest mt-4 block">YEAR_2025</span>
+</h1>
+<div class="absolute -left-16 top-1/2 -translate-y-1/2 w-12 h-32 border-l border-primary/20 hidden md:block"></div>
+<div class="absolute -right-16 top-1/2 -translate-y-1/2 w-12 h-32 border-r border-primary/20 hidden md:block"></div>
+</div>
+<div class="max-w-xl mx-auto bg-surface-dark/40 border border-slate-800/50 p-6 relative">
+<div class="data-label -top-3 left-4 bg-background-dark px-2">MANIFEST_INFO</div>
+<p class="text-slate-400 text-sm font-mono leading-relaxed text-left">
+<span class="text-primary-glow font-bold">&gt;&gt; SUBJECT: RAZAN_01</span><br/>
+                    Parsing encrypted data stream... Integrity verified. High-resonance achievements indexed. Chrono-archival log ready for review.
+                </p>
+</div>
+<div class="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-slate-800/30">
+<div class="bg-surface-dark/30 p-4 border border-slate-800/80 text-center relative group hover:border-primary/50 transition-all">
+<div class="text-[10px] font-mono text-slate-500 mb-1 uppercase tracking-wider">LOG_ENTRIES</div>
+<div class="text-2xl font-bold text-slate-200">05</div>
+</div>
+<div class="bg-surface-dark/30 p-4 border border-slate-800/80 text-center relative group hover:border-primary/50 transition-all">
+<div class="text-[10px] font-mono text-slate-500 mb-1 uppercase tracking-wider">RESILIENCE</div>
+<div class="text-2xl font-bold text-emerald-400/80">MAX_LEVEL</div>
+</div>
+<div class="bg-surface-dark/30 p-4 border border-slate-800/80 text-center relative group hover:border-primary/50 transition-all">
+<div class="text-[10px] font-mono text-slate-500 mb-1 uppercase tracking-wider">CORE_SYNC</div>
+<div class="text-2xl font-bold text-indigo-400/80">OPTIMAL</div>
+</div>
+<div class="bg-surface-dark/30 p-4 border border-slate-800/80 text-center relative group hover:border-primary/50 transition-all">
+<div class="text-[10px] font-mono text-slate-500 mb-1 uppercase tracking-wider">STATUS</div>
+<div class="text-2xl font-bold text-blue-400/80">LEGENDARY</div>
+</div>
+</div>
+</header>
+<div class="relative max-w-5xl mx-auto">
+<div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px timeline-line -translate-x-1/2 z-0 hidden md:block"></div>
+<div class="space-y-32 relative z-10">
+<div class="group relative flex flex-col md:flex-row items-center gap-12 md:gap-0">
+<div class="w-full md:w-1/2 md:pr-16 md:text-right order-2 md:order-1">
+<div class="chrono-card glass-panel tech-border-corners p-8 relative">
+<div class="data-label -top-3 md:right-4 left-4 md:left-auto bg-surface-dark px-2">LOG_ENTRY_ID: 001</div>
+<div class="flex justify-between md:justify-end items-center mb-4 gap-4 border-b border-primary/20 pb-2">
+<span class="text-[10px] font-mono text-primary-glow/60 tracking-widest uppercase">MED_RECORDS</span>
+<span class="text-[10px] font-mono text-slate-500">2025.Q1.ARCHIVE</span>
+</div>
+<h3 class="text-3xl font-bold text-slate-100 mb-3 uppercase tracking-tight group-hover:text-primary-glow transition-colors">Survived Shifts</h3>
+<div class="bg-primary/5 border-l-2 border-primary/40 p-3 mb-6">
+<p class="text-primary-glow/80 text-sm font-mono italic">"You're basically a doctor now. Sleep is for the weak."</p>
+</div>
+<div class="text-slate-400 text-xs font-mono space-y-1">
+<p>&gt; STATUS: Endurance thresholds surpassed.</p>
+<p>&gt; RECORD: Hospital environment adaptation complete.</p>
+</div>
+</div>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-12 h-12 bg-background-dark border border-primary/60 flex items-center justify-center z-20 order-1 md:order-2 shadow-[0_0_15px_rgba(94,32,140,0.2)]">
+<span class="material-symbols-outlined text-primary-glow text-xl">ecg_heart</span>
+</div>
+<div class="w-full md:w-1/2 md:pl-16 flex justify-start md:justify-center items-center ml-16 md:ml-0 order-3">
+<div class="relative border border-slate-800 p-2 bg-slate-900/20">
+<div class="w-32 h-32 bg-background-dark border border-primary/20 flex items-center justify-center relative overflow-hidden group-hover:border-primary/50 transition-colors">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#5e208c_1px,transparent_1px)] bg-[size:8px_8px]"></div>
+<span class="material-symbols-outlined text-6xl text-primary-glow/40">medical_services</span>
+<div class="absolute bottom-1 right-1 text-[7px] font-mono text-primary/40">VISUAL.01</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col md:flex-row-reverse items-center gap-12 md:gap-0">
+<div class="w-full md:w-1/2 md:pl-16 text-left order-2 md:order-1">
+<div class="chrono-card glass-panel tech-border-corners p-8 relative">
+<div class="data-label -top-3 left-4 bg-surface-dark px-2">LOG_ENTRY_ID: 002</div>
+<div class="flex justify-between items-center mb-4 gap-4 border-b border-primary/20 pb-2">
+<span class="text-[10px] font-mono text-primary-glow/60 tracking-widest uppercase">ACADEMIC_RECORD</span>
+<span class="text-[10px] font-mono text-slate-500">2025.Q2.ARCHIVE</span>
+</div>
+<h3 class="text-3xl font-bold text-slate-100 mb-3 uppercase tracking-tight group-hover:text-primary-glow transition-colors">Nailed the Med Exam</h3>
+<div class="bg-primary/5 border-l-2 border-primary/40 p-3 mb-6">
+<p class="text-primary-glow/80 text-sm font-mono italic">"Brains and beauty? Pick a struggle (JK don't)."</p>
+</div>
+<div class="text-slate-400 text-xs font-mono space-y-1">
+<p>&gt; STATUS: Cognitive throughput 110% of standard.</p>
+<p>&gt; RECORD: Certification achieved. Data integrity high.</p>
+</div>
+</div>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-12 h-12 bg-background-dark border border-primary/60 flex items-center justify-center z-20 order-1 md:order-2 shadow-[0_0_15px_rgba(94,32,140,0.2)]">
+<span class="material-symbols-outlined text-primary-glow text-xl">school</span>
+</div>
+<div class="w-full md:w-1/2 md:pr-16 flex justify-start md:justify-center items-center ml-16 md:ml-0 order-3">
+<div class="relative border border-slate-800 p-2 bg-slate-900/20">
+<div class="w-32 h-32 bg-background-dark border border-primary/20 flex items-center justify-center relative overflow-hidden group-hover:border-primary/50 transition-colors">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#5e208c_1px,transparent_1px)] bg-[size:8px_8px]"></div>
+<span class="material-symbols-outlined text-6xl text-primary-glow/40">verified</span>
+<div class="absolute bottom-1 right-1 text-[7px] font-mono text-primary/40">VISUAL.02</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col md:flex-row items-center gap-12 md:gap-0">
+<div class="w-full md:w-1/2 md:pr-16 md:text-right order-2 md:order-1">
+<div class="chrono-card glass-panel tech-border-corners p-8 relative">
+<div class="data-label -top-3 md:right-4 left-4 md:left-auto bg-surface-dark px-2">LOG_ENTRY_ID: 003</div>
+<div class="flex justify-between md:justify-end items-center mb-4 gap-4 border-b border-primary/20 pb-2">
+<span class="text-[10px] font-mono text-primary-glow/60 tracking-widest uppercase">SOCIAL_PROFILE</span>
+<span class="text-[10px] font-mono text-slate-500">CONSTANT.LOG</span>
+</div>
+<h3 class="text-3xl font-bold text-slate-100 mb-3 uppercase tracking-tight group-hover:text-primary-glow transition-colors">Certified Good Girl</h3>
+<div class="bg-primary/5 border-l-2 border-primary/40 p-3 mb-6">
+<p class="text-primary-glow/80 text-sm font-mono italic">"Official rating: 11/10 would befriend again."</p>
+</div>
+<div class="text-slate-400 text-xs font-mono space-y-1">
+<p>&gt; STATUS: Morality subroutines optimal.</p>
+<p>&gt; RECORD: Social resonance exceeding baseline.</p>
+</div>
+</div>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-12 h-12 bg-background-dark border border-primary/60 flex items-center justify-center z-20 order-1 md:order-2 shadow-[0_0_15px_rgba(94,32,140,0.2)]">
+<span class="material-symbols-outlined text-primary-glow text-xl">favorite</span>
+</div>
+<div class="w-full md:w-1/2 md:pl-16 flex justify-start md:justify-center items-center ml-16 md:ml-0 order-3">
+<div class="relative border border-slate-800 p-2 bg-slate-900/20">
+<div class="w-32 h-32 bg-background-dark border border-primary/20 flex items-center justify-center relative overflow-hidden group-hover:border-primary/50 transition-colors">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#5e208c_1px,transparent_1px)] bg-[size:8px_8px]"></div>
+<span class="material-symbols-outlined text-6xl text-primary-glow/40">stars</span>
+<div class="absolute bottom-1 right-1 text-[7px] font-mono text-primary/40">VISUAL.03</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col md:flex-row-reverse items-center gap-12 md:gap-0">
+<div class="w-full md:w-1/2 md:pl-16 text-left order-2 md:order-1">
+<div class="chrono-card glass-panel tech-border-corners p-8 relative">
+<div class="data-label -top-3 left-4 bg-surface-dark px-2">LOG_ENTRY_ID: 004</div>
+<div class="flex justify-between items-center mb-4 gap-4 border-b border-primary/20 pb-2">
+<span class="text-[10px] font-mono text-primary-glow/60 tracking-widest uppercase">RESILIENCE_CORE</span>
+<span class="text-[10px] font-mono text-slate-500">EVENT_VARIOUS</span>
+</div>
+<h3 class="text-3xl font-bold text-slate-100 mb-3 uppercase tracking-tight group-hover:text-primary-glow transition-colors">Didn’t Let Bad Days Define You</h3>
+<div class="bg-primary/5 border-l-2 border-primary/40 p-3 mb-6">
+<p class="text-primary-glow/80 text-sm font-mono italic">"Main character energy. Plot armor activated."</p>
+</div>
+<div class="text-slate-400 text-xs font-mono space-y-1">
+<p>&gt; STATUS: Defensive protocols held firm.</p>
+<p>&gt; RECORD: Resilience metrics categorized as 'Elite'.</p>
+</div>
+</div>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-12 h-12 bg-background-dark border border-primary/60 flex items-center justify-center z-20 order-1 md:order-2 shadow-[0_0_15px_rgba(94,32,140,0.2)]">
+<span class="material-symbols-outlined text-primary-glow text-xl">shield</span>
+</div>
+<div class="w-full md:w-1/2 md:pr-16 flex justify-start md:justify-center items-center ml-16 md:ml-0 order-3">
+<div class="relative border border-slate-800 p-2 bg-slate-900/20">
+<div class="w-32 h-32 bg-background-dark border border-primary/20 flex items-center justify-center relative overflow-hidden group-hover:border-primary/50 transition-colors">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#5e208c_1px,transparent_1px)] bg-[size:8px_8px]"></div>
+<span class="material-symbols-outlined text-6xl text-primary-glow/40">bolt</span>
+<div class="absolute bottom-1 right-1 text-[7px] font-mono text-primary/40">VISUAL.04</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col md:flex-row items-center gap-12 md:gap-0">
+<div class="w-full md:w-1/2 md:pr-16 md:text-right order-2 md:order-1">
+<div class="chrono-card glass-panel tech-border-corners p-8 relative">
+<div class="data-label -top-3 md:right-4 left-4 md:left-auto bg-surface-dark px-2">LOG_ENTRY_ID: 005</div>
+<div class="flex justify-between md:justify-end items-center mb-4 gap-4 border-b border-primary/20 pb-2">
+<span class="text-[10px] font-mono text-primary-glow/60 tracking-widest uppercase">ATMOSPHERE_MGMT</span>
+<span class="text-[10px] font-mono text-slate-500">REALTIME.SYNC</span>
+</div>
+<h3 class="text-3xl font-bold text-slate-100 mb-3 uppercase tracking-tight group-hover:text-primary-glow transition-colors">Great Weatherman</h3>
+<div class="bg-primary/5 border-l-2 border-primary/40 p-3 mb-6">
+<p class="text-primary-glow/80 text-sm font-mono italic">"Because you always bring the sunshine. (Cheesy but true)."</p>
+</div>
+<div class="text-slate-400 text-xs font-mono space-y-1">
+<p>&gt; STATUS: Sunshine levels constant.</p>
+<p>&gt; RECORD: Environmental mood boosted by 85%.</p>
+</div>
+</div>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-12 h-12 bg-background-dark border border-primary/60 flex items-center justify-center z-20 order-1 md:order-2 shadow-[0_0_15px_rgba(94,32,140,0.2)]">
+<span class="material-symbols-outlined text-primary-glow text-xl">wb_sunny</span>
+</div>
+<div class="w-full md:w-1/2 md:pl-16 flex justify-start md:justify-center items-center ml-16 md:ml-0 order-3">
+<div class="relative border border-slate-800 p-2 bg-slate-900/20">
+<div class="w-32 h-32 bg-background-dark border border-primary/20 flex items-center justify-center relative overflow-hidden group-hover:border-primary/50 transition-colors">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#5e208c_1px,transparent_1px)] bg-[size:8px_8px]"></div>
+<span class="material-symbols-outlined text-6xl text-primary-glow/40">partly_cloudy_day</span>
+<div class="absolute bottom-1 right-1 text-[7px] font-mono text-primary/40">VISUAL.05</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col items-center pt-12">
+<div class="w-full max-w-2xl border border-slate-800 bg-black/40 font-mono text-[11px] p-6 rounded shadow-lg">
+<div class="border-b border-slate-800/50 pb-3 mb-4 flex justify-between items-center">
+<span class="text-primary-glow">ARCHIVE_SYSTEM_PROCESS</span>
+<span class="w-2 h-4 bg-primary-glow/40 animate-pulse"></span>
+</div>
+<div class="space-y-1.5 text-slate-500">
+<p>&gt; INITIALIZING_NEXT_CHAPTER...</p>
+<p>&gt; LOADING_HAPPINESS_MODULE: <span class="text-terminal-green">CALIBRATED</span></p>
+<p>&gt; LOADING_SUCCESS_PARAMETERS: <span class="text-terminal-green">UNLIMITED</span></p>
+<p>&gt; SUBJECT_STATUS: RAZAN_01 READY FOR DEPLOYMENT_2025.</p>
+<p class="text-primary-glow mt-4">&gt;&gt; LOG_TRANSMISSION_COMPLETE.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="mt-32 border-t border-slate-800/50 pt-12 flex flex-col md:flex-row justify-between items-center text-[10px] font-mono text-slate-500 uppercase tracking-widest gap-6 relative">
+<div class="flex items-center gap-8">
+<span class="flex items-center gap-3">
+<span class="w-2 h-2 bg-emerald-500 rounded-none shadow-[0_0_8px_rgba(16,185,129,0.3)]"></span>
+                    LOG_VERIFIED
+                </span>
+<span>ID: 2025.RZ.01</span>
+</div>
+<div class="flex gap-10">
+<a class="hover:text-primary-glow transition-colors cursor-pointer">[ ARCHIVE_ACCESS ]</a>
+<a class="hover:text-primary-glow transition-colors cursor-pointer">[ EXPORT_DATA ]</a>
+</div>
+<div class="text-slate-600">
+                ADMIN: RAZAN_ROOT
+            </div>
+</footer>
+</div>
+<div class="fixed top-0 right-0 w-[60vw] h-[60vw] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none z-0"></div>
+<div class="fixed bottom-0 left-0 w-[60vw] h-[60vw] bg-indigo-900/10 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none z-0"></div>
+<div class="fixed left-8 top-1/2 -translate-y-1/2 hidden xl:block opacity-40">
+<div class="flex flex-col gap-6 items-center">
+<div class="w-px h-24 bg-gradient-to-b from-transparent via-primary/40 to-transparent"></div>
+<div class="rotate-[-90deg] text-[9px] font-mono tracking-[0.4em] text-primary-glow uppercase whitespace-nowrap">
+                Deep_Space_Monitoring
+            </div>
+<div class="w-px h-24 bg-gradient-to-b from-transparent via-primary/40 to-transparent"></div>
+</div>
+</div>
+<div class="fixed right-8 top-1/2 -translate-y-1/2 hidden xl:block opacity-40">
+<div class="flex flex-col gap-6 items-center">
+<div class="w-px h-24 bg-gradient-to-b from-transparent via-primary/40 to-transparent"></div>
+<div class="rotate-[90deg] text-[9px] font-mono tracking-[0.4em] text-primary-glow uppercase whitespace-nowrap">
+                Archival_Unit_v4.2
+            </div>
+<div class="w-px h-24 bg-gradient-to-b from-transparent via-primary/40 to-transparent"></div>
+</div>
+</div>
+
+</body></html>
