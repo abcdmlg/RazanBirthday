@@ -1751,6 +1751,9 @@
             const playIcon = document.getElementById('play-icon');
             const indicators = document.querySelectorAll('.playing-indicator');
             const volSlider = document.getElementById('music-vol-slider');
+            const widget = document.getElementById('music-player-widget');
+
+            let initialized = false;
 
             if (!audio || !playBtn) return;
 
@@ -1763,35 +1766,44 @@
 
             function toggle() {
                 if (audio.paused) {
-                    audio.play().then(() => updateUI(true)).catch(e => console.log("Interaction required"));
+                    audio.play().then(() => {
+                        updateUI(true);
+                        initialized = true;
+                    }).catch(e => console.log("Interaction required"));
                 } else {
                     audio.pause();
                     updateUI(false);
                 }
             }
 
-            playBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+            playBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggle();
+            });
+
             volSlider.addEventListener('input', (e) => { audio.volume = e.target.value; });
             volSlider.addEventListener('click', (e) => e.stopPropagation());
 
-            const startOnAction = () => {
-                if (audio.paused) {
-                    audio.play().then(() => {
-                        updateUI(true);
-                        document.removeEventListener('click', startOnAction);
-                        document.removeEventListener('keydown', startOnAction);
-                    }).catch(e => { });
-                }
+            const startOnAction = (e) => {
+                if (initialized) return;
+
+                // If clicking inside the player, let the specific listeners handle it
+                if (e && e.target && widget && widget.contains(e.target)) return;
+
+                audio.play().then(() => {
+                    updateUI(true);
+                    initialized = true;
+                    cleanup();
+                }).catch(e => { });
             };
+
+            function cleanup() {
+                document.removeEventListener('click', startOnAction);
+                document.removeEventListener('keydown', startOnAction);
+            }
+
             document.addEventListener('click', startOnAction);
             document.addEventListener('keydown', startOnAction);
-
-            // Explicit trigger for existing buttons to help browsers
-            setTimeout(() => {
-                document.querySelectorAll('button').forEach(btn => {
-                    btn.addEventListener('click', startOnAction);
-                });
-            }, 1000);
         })();
     </script>
 </body>
